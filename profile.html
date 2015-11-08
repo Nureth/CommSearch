@@ -1,0 +1,121 @@
+<html>
+  <head>
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src="firebase.js"></script>
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+  <!--navigation bar-->
+<nav class="navbar navbar-inverse navbar-fixed-top" style="opacity:1">
+  <div class="container-fluid">
+    <div class="navbar-header">
+    <!--collapsable sausage-->
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavigationBar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span> 
+          </button>
+          <!--Brand or company name-->
+      <a class="navbar-brand" href="index.html"><p style="color:black">CommSearch</p></a>
+    </div>
+      <!--If you don't want it to collapse, leave the div below with no class-->
+      <!--ALSO SCROLLSPY IMPLEMENTED HERE USING HREF-->
+    <div class="container">
+        <div class="collapse navbar-collapse" id="myNavigationBar">
+                <ul class="nav navbar-nav">
+                        <li><a href="index.html">Home</a></li>
+                        <li class="active"><a href="profile.html">My Profile</a></li>
+                        <li><a href="volunteer.html">Volunteer Opportunities</a></li> 
+                </ul>
+
+               <ul class="nav navbar-nav navbar-right">
+                  <li><a href="signup.html"><span class="glyphicon glyphicon-user"></span> SIGN UP</a></li>
+              </ul>
+
+        </div>
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="jumbotron" style="background-image: url(http://i.huffpost.com/gen/2436654/images/o-YOUNG-PEOPLE-VOLUNTEERING-facebook.jpg)">
+<div class="container" >
+      <h1>CommSearch</h1> 
+      <p >Find volunteer opportunities around your area!</p> 
+</div>
+</div>
+
+<div class="container">
+
+    <div class="user-details">
+            <div class="user-image">
+                <img src="http://puu.sh/ldLif/8dae5c4637.jpg" width="100px" height="100px" alt="Duke Kitty" title="Duke" class="img-circle">
+            </div>
+            <div class="user-info-block">
+                <center>
+                <ul class="navigation">
+                    <li class="active">
+                        <a data-toggle="tab" href="#information">
+                            <span class="glyphicon glyphicon-user"></span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a data-toggle="tab" href="#email">
+                            <span class="glyphicon glyphicon-envelope"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#interests">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </a>
+                    </li>
+                </ul>
+                </center>
+                <div class="user-body">
+                    <div class="tab-content">
+                        <div id="information" class="tab-pane active">
+                            <h4>Account Information</h4>
+                            <div id="acinfo">
+                                   <div id='firstname'>First Name: </div>
+                                   <div id='lastname'>Last Name: </div>     
+                            </div>
+                        </div>
+                        <div id="email" class="tab-pane">
+                            <h4>Email Information</h4>
+                            <div id="eminfo"></div>
+                        </div>
+                        <div id="interests" class="tab-pane">
+                            <h4>Interests Information</h4>
+                            <div id="intinfo"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+
+  <script>
+    displayInfo();
+    function displayInfo() {
+                firstname = localStorage.firstname;
+                lastname = localStorage.lastname;
+                email = localStorage.email;
+                userInterestArray = JSON.parse(localStorage["userInterestArray"]);
+                localStorage.signupbutton = "false";
+                localStorage.signinbutton = "false";
+
+                document.getElementById('firstname').innerHTML += firstname;
+                document.getElementById('lastname').innerHTML += lastname;
+                document.getElementById('eminfo').innerHTML += email;
+                document.getElementById('intinfo').innerHTML += userInterestArray;
+      }
+</script>
+  </body>
+</html>

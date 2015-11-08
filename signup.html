@@ -1,0 +1,176 @@
+<html>
+  <head>
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src="firebase.js"></script>
+          <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+      <link rel="stylesheet" href="profile.css">
+
+      <!-- jQuery library -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+      <!-- Latest compiled JavaScript -->
+      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+  <!--navigation bar-->
+<nav class="navbar navbar-inverse navbar-fixed-top" style="opacity:1">
+  <div class="container-fluid">
+    <div class="navbar-header">
+    <!--collapsable sausage-->
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavigationBar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span> 
+          </button>
+          <!--Brand or company name-->
+      <a class="navbar-brand" href="index.html"><p style="color:black">CommSearch</p></a>
+    </div>
+      <!--If you don't want it to collapse, leave the div below with no class-->
+      <!--ALSO SCROLLSPY IMPLEMENTED HERE USING HREF-->
+    <div class="collapse navbar-collapse" id="myNavigationBar">
+            <ul class="nav navbar-nav">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="profile.html">My Profile</a></li>
+                    <li><a href="volunteer.html">Volunteer Opportunities</a></li> 
+            </ul>
+
+
+           <ul class="nav navbar-nav navbar-right">
+              <li><a href="signin.html"><span class="glyphicon glyphicon-log-in"></span> SIGN IN </a></li>
+          </ul>
+
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron" style="background-image: url(http://i.huffpost.com/gen/2436654/images/o-YOUNG-PEOPLE-VOLUNTEERING-facebook.jpg)">
+    <div class="container" >
+          <h1>CommSearch</h1> 
+          <p>Find volunteer opportunities around your area!</p> 
+    </div>
+</div>
+
+<div class="container">
+    <h2 class="form-signin-heading">This is a sign up page! Wew!</h2>
+    <form role="form">
+      <div class="form-group">
+           <label for="name">First Name:</label>
+           <input type='text' class="form-control" id='firstname' placeholder='First Name'>
+      </div>
+      <div class="form-group">
+            <label for="name">Last Name:</label>
+           <input type='text' class="form-control" id='lastname' placeholder='Last Name'>
+      </div>
+	  <div class="form-group">
+            <label for="name">Location:</label>
+           <input type='text' class="form-control" id='location' placeholder='Location'>
+      </div>
+      <div class="form-group">
+         <label for="email">Email address:</label>
+         <input type='email' class="form-control" id='email' placeholder='Email'>
+      </div>
+      <div class="form-group">
+          <label for="pwd">Password:</label>
+          <input type='password' class="form-control" id='password' placeholder='Password'>
+      </div>
+
+      <div class="panel panel-default">
+             <div class="panel-heading">What are you interested in?</div>
+                  <div class="panel-body">
+                      
+                          <div class="row">
+                              <div class="col-md-4">
+                                  <div class="checkbox">
+                                      <input type="checkbox" name="volunteer" id="volunteer" data-target="#demo" value="Education">Education</input>
+                                  </div>
+                              </div>
+
+                              <div class="col-md-4">
+                                   <div class="checkbox">
+                                         <input type="checkbox" name="volunteer" id="volunteer" data-target="#demo" value="Disabilities">Disabilities</input>
+                                   </div>
+                              </div>
+                          </div>
+
+                          <div class="row">
+                                <div class="col-md-4">
+                                  <div class="checkbox">
+                                      <input type="checkbox" name="volunteer" id="volunteer" data-target="#demo" value="Politics">Politics</input>
+                                  </div>
+                              </div>
+
+                              <div class="col-md-4">
+                                   <div class="checkbox">
+                                         <input type="checkbox" name="volunteer" id="volunteer" data-target="#demo" value="Science">Science</input>
+                                   </div>
+                              </div>
+                          </div>
+
+                      <div class="row">
+                      <div class="col-md-4">
+                            <div class="checkbox">
+                                  <input type="checkbox" name="volunteer" data-toggle="collapse" id="volunteer" data-target="#demo" value="Environment">Environment</input>
+                            </div>
+                            <div id="demo" class="collapse">
+                                     <div class="checkbox">
+                                            <label><input type="checkbox" name="volunteer" id="volunteer" value="Climate Change">Climate Change</label>
+                                      </div>
+
+                                      <div class="checkbox">
+                                            <label><input type="checkbox" name="volunteer" id="volunteer" value="Energy">Energy</label>
+                                      </div>
+                            </div>
+                      </div>
+                    </div>
+                </div>
+           </div>
+           <button type="submit" id="submit" class="btn btn-default">Submit</button>
+      </div>
+    </div>
+    </form>
+
+<script>
+    var myDataRef = new Firebase('https://scorching-fire-6174.firebaseio.com/');
+    var myUsers= myDataRef.child('users');
+
+      $('button').on('click', function() {
+          var firstname = $('#firstname').val();
+          var lastname = $('#lastname').val();
+		  var place = $('#location').val();
+          var email= $('#email').val();
+          var password = $('#password').val();
+          var userInterestArray = [];
+          $("input:checkbox[name=volunteer]:checked").each(function(){
+              userInterestArray.push($(this).val());
+          });
+
+          myUsers.push({
+            firstname: firstname, 
+            lastname: lastname,
+			place: place,
+            email: email,
+            password: password,
+            userInterestArray: userInterestArray
+          });
+
+          $('#firstname').val('');
+          $('#lastname').val('');
+		  $('#location').val('');
+          $('#email').val('');
+          $('#password').val('');
+		  
+			localStorage.firstname = firstname;
+			localStorage.lastname = lastname;
+			localStorage.place = place;
+			localStorage.email =email;
+			//localStorage["userInterestArray"] = JSON.stringify(userInterestArray);
+			
+		  window.location.href = 'profile.html';
+		});
+  </script>
+
+  </body>
+  </div>
+</html>

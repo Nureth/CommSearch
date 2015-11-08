@@ -1,0 +1,188 @@
+<html>
+  <head>
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src="firebase.js"></script>
+    <link rel="stylesheet" href="signinstyle.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+  <!--navigation bar-->
+<nav class="navbar navbar-inverse navbar-fixed-top" style="opacity:1">
+  <div class="container-fluid">
+    <div class="navbar-header">
+    <!--collapsable sausage-->
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavigationBar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span> 
+          </button>
+          <!--Brand or company name-->
+      <a class="navbar-brand" href="index.html"><p style="color:black">CommSearch</p></a>
+    </div>
+      <!--If you don't want it to collapse, leave the div below with no class-->
+      <!--ALSO SCROLLSPY IMPLEMENTED HERE USING HREF-->
+    <div class="container">
+        <div class="collapse navbar-collapse" id="myNavigationBar">
+                <ul class="nav navbar-nav">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="profile.html">My Profile</a></li>
+                        <li class="active"><a href="volunteer.html">Volunteer Opportunities</a></li> 
+                </ul>
+
+               <ul class="nav navbar-nav navbar-right">
+                  <li><a href="signup.html"><span class="glyphicon glyphicon-user"></span> SIGN UP</a></li>
+              </ul>
+
+        </div>
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="jumbotron" style="background-image: url(http://i.huffpost.com/gen/2436654/images/o-YOUNG-PEOPLE-VOLUNTEERING-facebook.jpg)">
+<div class="container" >
+      <h1>CommSearch</h1> 
+      <p >Find volunteer opportunities around your area!</p> 
+</div>
+</div>
+    <div id='content'>
+	</div>
+    <script type='text/javascript'>
+
+		/*function hndlr(response) {
+			var resultList = [ ];
+			var linkList = [ ];
+			//var excludedTerms = ['Fire', 'Energy', 'Center'];
+			//var includedTerms = localStorage.userInterestArray;
+			var serviceTerms = ["access", "addiction", "addict", "advocate", "affiliation", "afford", "agency", "alliance", "altruism", "altruistic", "assess", "assistance", "assist", "assurance", "avante", "award", "benefactor", "benefits", "benefit", "bequest", "beyond", "boost", "boosting", "bucks", "build", "careful", "care", "cause", "challenge", "charities", "charity", "check", "coalition", "collegic", "community", "confidence", "conserve", "contribute", "contribution", "convince", "convincing", "cooperate", "cooperation", "corps", "costs", "cost", "create", "creation", "credit", "cyber", "dedicate", "dedication",  "donate", "donation", "donor", "education", "educate",  "empower", "entry", "establish", "establishment", "expectation", "experience", "faith", "federation", "fight", "financial", "finance", "fiscal", "flourish", "focus", "foresee", "foundations", "foundation", "fundraising", "funds", "fundraise",  "garde", "generosity", "generous", "gifting", "gift", "give back", "giving", "give", "goal", "goodwill", "good", "health", "help", "helping", "hand", "hero", "homeless", "honesty", "hope", "hours", "impact", "importance", "impression", "individuals", "individual", "information", "informed", "innovate", "innovation", "international", "invest", "investment", "income", "kindness", "kind", "largesse", "lasting", "leadership", "legitimate", "lifesaving", "life", "low", "members", "mentality", "method", "mission", "modest", "national", "needs", "needy", "non", "optimism", "organization", "outreach", "overhead", "oversee", "patron", "philanthropy", "pitch", "pool", "positive", "potential", "poverty", "prize", "procedure", "projects", "prosperity", "purpose", "quality", "qualm", "quandary", "quantify", "quantity", "query", "quest", "raise", "reach", "rebuild", "regulate", "relationship", "relief", "religion", "renew", "renovate", "represent", "rescue", "research", "resource", "restore", "rule",  "safe", "salvation", "saving", "save", "scholarship", "serious", "service", "sharing", "social", "specialize", "sponsor", "strategy", "strength", "success", "support", "survival", "survivor", "teamwork", "time", "tireless", "together", "track", "trust", "unique", "universal", "venture", "volunteer", "warrant", "win", "wisdom", "worker", "will", "work", "zeal"];
+			var similarityValue = 0;
+			var similarityCount = 0;
+			for (var i = 0; i < response.items.length; i++) 
+			{
+				var item = response.items[i];
+				var name = item.htmlTitle.split(" ");
+				for (var j = 0; j < resultList.length; j++) 
+				{
+					for (var k = 0; k < name.length; k++)
+					{
+						if (resultList[j].indexOf(name[k]) > -1)
+						{
+							similarityCount++;
+						}
+					}
+					if (similarityCount > similarityValue)
+					{
+						similarityValue = similarityCount;
+					}
+					similarityCount = 0;
+				}
+				if (((name.length-similarityValue) > 2) || (similarityValue/name.length < 0.8))
+				{
+					if (contentCheck(item.htmlTitle, serviceTerms)) 
+					{
+						resultList.push(item.htmlTitle);
+						linkList.push(item.link);
+					}
+				}
+			}
+			
+			writeResults(resultList, linkList);
+			
+			}*/
+			function hndlr(response) {
+			localStorage.resultList = "";
+			localStorage.linkList = "";
+			//var excludedTerms = ['Fire', 'Energy', 'Center'];
+			//var includedTerms = localStorage.userInterestArray;
+			var serviceTerms = ["access", "addiction", "addict", "advocate", "affiliation", "afford", "agency", "alliance", "altruism", "altruistic", "assess", "assistance", "assist", "assurance", "avante", "award", "benefactor", "benefits", "benefit", "bequest", "beyond", "boost", "boosting", "bucks", "build", "careful", "care", "cause", "challenge", "charities", "charity", "check", "coalition", "collegic", "community", "confidence", "conserve", "contribute", "contribution", "convince", "convincing", "cooperate", "cooperation", "corps", "costs", "cost", "create", "creation", "credit", "cyber", "dedicate", "dedication",  "donate", "donation", "donor", "education", "educate",  "empower", "entry", "establish", "establishment", "expectation", "experience", "faith", "federation", "fight", "financial", "finance", "fiscal", "flourish", "focus", "foresee", "foundations", "foundation", "fundraising", "funds", "fundraise",  "garde", "generosity", "generous", "gifting", "gift", "give back", "giving", "give", "goal", "goodwill", "good", "health", "help", "helping", "hand", "hero", "homeless", "honesty", "hope", "hours", "impact", "importance", "impression", "individuals", "individual", "information", "informed", "innovate", "innovation", "international", "invest", "investment", "income", "kindness", "kind", "largesse", "lasting", "leadership", "legitimate", "lifesaving", "life", "low", "members", "mentality", "method", "mission", "modest", "national", "needs", "needy", "non", "optimism", "organization", "outreach", "overhead", "oversee", "patron", "philanthropy", "pitch", "pool", "positive", "potential", "poverty", "prize", "procedure", "projects", "prosperity", "purpose", "quality", "qualm", "quandary", "quantify", "quantity", "query", "quest", "raise", "reach", "rebuild", "regulate", "relationship", "relief", "religion", "renew", "renovate", "represent", "rescue", "research", "resource", "restore", "rule",  "safe", "salvation", "saving", "save", "scholarship", "serious", "service", "sharing", "social", "specialize", "sponsor", "strategy", "strength", "success", "support", "survival", "survivor", "teamwork", "time", "tireless", "together", "track", "trust", "unique", "universal", "venture", "volunteer", "warrant", "win", "wisdom", "worker", "will", "work", "zeal"];
+			var similarityValue = 0;
+			var similarityCount = 0;
+			for (var i = 0; i < response.items.length; i++) 
+			{
+				var item = response.items[i];
+				var name = item.htmlTitle.split(" ");
+				for (var j = 0; j < localStorage.resultList.split(",.,.").length; j++) 
+				{
+					for (var k = 0; k < name.length; k++)
+					{
+						if (localStorage.resultList.indexOf(name[k]) > -1)
+						{
+							similarityCount++;
+						}
+					}
+					if (similarityCount > similarityValue)
+					{
+						similarityValue = similarityCount;
+					}
+					similarityCount = 0;
+				}
+				if (((name.length-similarityValue) > 2) || (similarityValue/name.length < 0.8))
+				{
+					if (contentCheck(item.htmlTitle, serviceTerms)) 
+					{
+						localStorage.resultList += item.htmlTitle + ",.,.";
+						localStorage.linkList += item.link + ",.,.";
+					}
+				}
+			}
+			//writeResults(resultList, linkList);
+			
+		}
+
+		function contentCheck(name, terms) 
+		{
+			for (var i = 0; i < terms.length; i++) 
+			{
+				if (name.toLowerCase().indexOf(terms[i]) > -1)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		
+
+		
+    </script>
+	<script type='text/javascript'> 
+		var cxs = ['010665838126450918096:jxwrq2uzp9i', '010665838126450918096:1ajuydsutdm'];
+		var interests = localStorage.userInterestArray;
+		for (var i = 0; i < cxs.length; i++) 
+		{
+			for (var j = 0; j < interests.length; j++)
+			{
+				var place = localStorage.place;
+				var searchTerms = interests[j] + '+volunteer+opportunities' + "+in+" + place;
+				var key = 'AIzaSyC71nFG660tK-3UynddFrdr7d2YZFwF84U';
+				var cx = cxs[i]; 
+				var url = ('https://www.googleapis.com/customsearch/v1?q=' + searchTerms + '&key=' + key + '&cx=' + cx + '&callback=hndlr');
+				//document.getElementById("content").innerHTML += "<br>" + url;
+				var s = document.createElement('script');
+				s.src = url;
+				document.getElementsByTagName('head')[0].appendChild(s);
+			}
+		}
+		
+		writeResults(localStorage.resultList, localStorage.linkList);
+		
+		function writeResults(resultList, linkList)
+		{
+			var web = "Website";
+			var results = resultList.split(",.,.");
+			var links = linkList.split(",.,.");
+			for (var i=0; i<results.length-1; i++)
+			{
+				document.getElementById('content').innerHTML += '<br>' + results[i];
+				document.getElementById('content').innerHTML += '<br>' + web.link(links[i]);
+			}
+		}
+
+		
+		
+	</script>
+  </body>
+</html>

@@ -1,0 +1,97 @@
+<html>
+  <head>
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src="firebase.js"></script>
+    <link rel="stylesheet" href="signinstyle.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+  <!--navigation bar-->
+<nav class="navbar navbar-inverse navbar-fixed-top" style="opacity:1">
+  <div class="container-fluid">
+    <div class="navbar-header">
+    <!--collapsable sausage-->
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavigationBar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span> 
+          </button>
+          <!--Brand or company name-->
+      <a class="navbar-brand" href="index.html">CommSearch</a>
+    </div>
+      <!--If you don't want it to collapse, leave the div below with no class-->
+      <!--ALSO SCROLLSPY IMPLEMENTED HERE USING HREF-->
+    <div class="container">
+        <div class="collapse navbar-collapse" id="myNavigationBar">
+                <ul class="nav navbar-nav">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="profile.html">My Profile</a></li>
+                        <li><a href="volunteer.html">Volunteer Opportunities</a></li> 
+                </ul>
+
+               <ul class="nav navbar-nav navbar-right">
+                  <li><a href="signup.html"><span class="glyphicon glyphicon-user"></span> SIGN UP</a></li>
+              </ul>
+
+        </div>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron" style="background-image: url(http://i.huffpost.com/gen/2436654/images/o-YOUNG-PEOPLE-VOLUNTEERING-facebook.jpg)">
+<div class="container" >
+      <h1>CommSearch</h1> 
+      <p >Find volunteer opportunities around your area!</p> 
+</div>
+</div>
+        <div class="container">
+              <form class="form-signin">
+                      <h2 class="form-signin-heading">Please sign in</h2>
+                      <label for="inputEmail" class="sr-only">Email address</label>
+                      <input type="email" id="email" class="form-control" placeholder="Email address" required autofocus>
+                      <label for="inputPassword" class="sr-only">Password</label>
+                      <input type="password" id="password" class="form-control" placeholder="Password" required>
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" value="remember-me"> Remember me
+                        </label>
+                      </div>
+                      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+              </form>
+          </div> <!-- /container -->
+          <div id="messagesDiv"></div>
+
+    <script type="text/javascript" >
+    var myDataRef = new Firebase('https://scorching-fire-6174.firebaseio.com/');
+    var myUsers= myDataRef.child('users');
+
+  $('button').on('click', function() {
+      var email = $('#email').val();
+      var password = $('#password').val();
+      $('#email').val('');
+      $('#password').val('');
+
+      readSignIn(email,password);
+      
+
+      function readSignIn(email, password) 
+      {
+        myUsers.orderByChild("email").equalTo(email).on("child_added", function (snapshot) 
+        {
+            if (snapshot.val().password == password) {
+                localStorage.firstname = snapshot.val().firstname;
+                localStorage.lastname = snapshot.val().lastname;
+				localStorage.place = snapshot.val().place;
+                localStorage.email = snapshot.val().email;
+                localStorage["userInterestArray"] = JSON.stringify(snapshot.val().userInterestArray);
+              window.location.href = 'profile.html';
+            }
+        });
+      }
+  });
+    </script>
+  </body>
+</html>
